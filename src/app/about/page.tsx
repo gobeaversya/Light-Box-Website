@@ -34,19 +34,18 @@ export default function AboutPage() {
         <section className="mb-14">
           <h2 className="text-2xl font-bold mb-5">The Equipment</h2>
           <div className="rounded-2xl border border-zinc-800 bg-zinc-900 overflow-hidden">
-            {/* Replace this div with an <Image> component when you have a real photo */}
-            <div className="aspect-video bg-zinc-800 flex items-center justify-center">
-              <div className="text-center">
-                <div className="text-5xl mb-3 text-amber-400/30">📷</div>
-                <div className="text-zinc-500 text-sm">Photo of Bambu Lab printer — coming soon</div>
-              </div>
-            </div>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/Print in process.jpg"
+              alt="Bambu Lab A1 printing a 3D photo lamp"
+              className="w-full object-cover"
+            />
             <div className="p-6">
-              <h3 className="font-semibold text-zinc-100 mb-2">Bambu Lab X1 Carbon</h3>
+              <h3 className="font-semibold text-zinc-100 mb-2">Bambu Lab A1</h3>
               <p className="text-zinc-400 text-sm leading-relaxed">
-                Every 3D photo lamp is printed on a Bambu Lab X1 Carbon — one of the most accurate
-                consumer 3D printers available. Its multi-axis calibration and enclosure deliver
-                the consistent layer quality that fine lithophane detail demands.
+                Every 3D photo lamp is printed on a Bambu Lab A1 — a precision machine known for
+                consistent, high-quality output. Its accuracy and reliability deliver the fine
+                layer detail that lithophane printing demands.
               </p>
             </div>
           </div>

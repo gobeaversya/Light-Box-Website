@@ -102,6 +102,40 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ── See It In Action ─────────────────────────────────────────────── */}
+      <section className="py-20">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 text-center">
+          <h2 className="text-3xl sm:text-4xl font-bold mb-3">
+            See It <span className="text-amber-400">Come Alive</span>
+          </h2>
+          <p className="text-zinc-400 mb-8">Dark panel. Add light. Watch your photo appear.</p>
+
+          {/* Amber glow effect behind the video simulates the backlight feel */}
+          <div className="relative rounded-2xl overflow-hidden border border-zinc-800 bg-zinc-950">
+            <div
+              className="absolute inset-0 opacity-30 pointer-events-none"
+              style={{ background: 'radial-gradient(ellipse at 50% 100%, rgba(251,191,36,0.2) 0%, transparent 60%)' }}
+            />
+            {/*
+              MOV works in Safari natively. Chrome/Firefox can play MOV if it contains
+              H.264 video — most modern phone recordings do. If you see a blank video
+              on Windows, convert the file to MP4 with HandBrake (free) and update the src.
+            */}
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="w-full relative z-10"
+            >
+              <source src="/Working Lithophane.MOV" type="video/mp4" />
+              <source src="/Working Lithophane.MOV" type="video/quicktime" />
+              Your browser does not support video playback.
+            </video>
+          </div>
+        </div>
+      </section>
+
       {/* ── What is a Lithophane ─────────────────────────────────────────── */}
       <section className="py-24 bg-zinc-900/40 border-y border-zinc-800/50">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 text-center">
