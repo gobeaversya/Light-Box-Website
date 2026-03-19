@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import Stripe from 'stripe'
 import { stripe, PRICES, RUSH_FEE, SHIPPING, SIZE_LABELS } from '@/lib/stripe'
 
 export async function POST(request: NextRequest) {
@@ -12,7 +13,7 @@ export async function POST(request: NextRequest) {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'
 
   // Build the line items Stripe will display on the checkout page
-  const lineItems: Parameters<typeof stripe.checkout.sessions.create>[0]['line_items'] = [
+  const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = [
     {
       price_data: {
         currency: 'usd',
