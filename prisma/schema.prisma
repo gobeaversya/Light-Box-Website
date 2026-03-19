@@ -1,0 +1,41 @@
+// Prisma schema — defines your database structure.
+// Run `npm run db:push` after any changes here to update the actual database.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  // SQLite stores everything in a single file — simple, no server needed.
+  // To switch to PostgreSQL later: change provider to "postgresql" and
+  // url to your database connection string. That's literally it.
+  url      = "file:./dev.db"
+}
+
+model Order {
+  id        String   @id @default(cuid()) // cuid() generates a collision-resistant unique ID
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Customer info — filled in by Stripe after payment
+  customerName  String
+  customerEmail String
+
+  // What they ordered
+  size  String  // "4x5", "6x8", or "8x10"
+  rush  Boolean @default(false)
+  notes String? // Optional, hence the ?
+
+  // Photo — one or both may be provided
+  photoFilename String? // Uploaded file: served at /uploads/filename.jpg
+  photoLink     String? // Google Drive / Dropbox URL
+
+  // Payment
+  stripeSessionId String @unique // Links this order back to Stripe
+  amountPaid      Int    // In cents (e.g. 4900 = $49.00)
+  paymentStatus   String @default("pending") // "pending" | "paid" | "failed"
+
+  // Fulfillment — this is what you update in the admin dashboard
+  status String @default("Pending") // "Pending" | "Printing" | "Shipped" | "Complete"
+}

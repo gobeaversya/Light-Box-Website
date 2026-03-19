@@ -1,0 +1,29 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Next.js build output
+.next/
+out/
+
+# Environment variables — NEVER commit these
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Database — the SQLite file contains real order data
+dev.db
+dev.db-journal
+
+# Photo uploads — don't commit customer photos to git
+public/uploads/*
+!public/uploads/.gitkeep
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+npm-debug.log*
