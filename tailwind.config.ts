@@ -8,11 +8,27 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      // Custom keyframe animation for the hero glow pulse effect
+      colors: {
+        cream: {
+          50: '#FAFAF8',
+          100: '#F5F4F0',
+          200: '#EBE7DE',
+        },
+        forest: {
+          500: '#4A6741',
+          600: '#3B5530',
+          700: '#2D4023',
+        },
+      },
+      fontFamily: {
+        serif: ['var(--font-cormorant)', 'Georgia', 'serif'],
+        sans: ['var(--font-dm-sans)', 'system-ui', 'sans-serif'],
+        script: ['var(--font-caveat)', 'cursive'],
+      },
       keyframes: {
         'glow-pulse': {
-          '0%, 100%': { opacity: '0.6' },
-          '50%': { opacity: '1' },
+          '0%, 100%': { opacity: '0.4' },
+          '50%': { opacity: '0.8' },
         },
       },
       animation: {

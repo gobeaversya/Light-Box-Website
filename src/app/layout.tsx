@@ -1,11 +1,24 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Cormorant_Garamond, DM_Sans, Caveat } from 'next/font/google'
 import './globals.css'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 
-// next/font automatically downloads and self-hosts fonts — no external request at runtime
-const inter = Inter({ subsets: ['latin'] })
+const cormorant = Cormorant_Garamond({
+  subsets: ['latin'],
+  weight: ['400', '600'],
+  variable: '--font-cormorant',
+})
+
+const dmSans = DM_Sans({
+  subsets: ['latin'],
+  variable: '--font-dm-sans',
+})
+
+const caveat = Caveat({
+  subsets: ['latin'],
+  variable: '--font-caveat',
+})
 
 export const metadata: Metadata = {
   title: 'Tell Your Story — Custom 3D Photo Lamps',
@@ -13,12 +26,10 @@ export const metadata: Metadata = {
     'Turn your favorite photos into stunning glowing 3D photo lamps. Handcrafted and backlit — your memories, transformed into light.',
 }
 
-// RootLayout wraps every page. The dark bg-zinc-950 here means the background
-// is never white, even before content loads.
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-zinc-950 text-zinc-100 min-h-screen flex flex-col antialiased`}>
+      <body className={`${cormorant.variable} ${dmSans.variable} ${caveat.variable} font-sans bg-cream-50 text-stone-900 min-h-screen flex flex-col antialiased`}>
         <Navbar />
         <main className="flex-1">{children}</main>
         <Footer />

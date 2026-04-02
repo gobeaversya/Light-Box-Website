@@ -6,15 +6,12 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  // SQLite stores everything in a single file — simple, no server needed.
-  // To switch to PostgreSQL later: change provider to "postgresql" and
-  // url to your database connection string. That's literally it.
-  url      = "file:./dev.db"
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model Order {
-  id        String   @id @default(cuid()) // cuid() generates a collision-resistant unique ID
+  id        String   @id @default(cuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -28,7 +25,7 @@ model Order {
   notes String? // Optional, hence the ?
 
   // Photo — one or both may be provided
-  photoFilename String? // Uploaded file: served at /uploads/filename.jpg
+  photoFilename String? // Cloudinary secure URL of the uploaded photo
   photoLink     String? // Google Drive / Dropbox URL
 
   // Payment

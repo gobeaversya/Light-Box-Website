@@ -1,39 +1,48 @@
 export default function AboutPage() {
   return (
-    <div className="min-h-screen py-16 px-4 sm:px-6">
+    <div className="min-h-screen py-16 px-4 sm:px-6 bg-cream-50">
       <div className="max-w-3xl mx-auto">
 
         {/* Header */}
         <div className="mb-14">
-          <h1 className="text-4xl sm:text-5xl font-bold mb-4">
-            About <span className="text-amber-400">Tell Your Story</span>
+          <h1 className="font-serif text-4xl sm:text-5xl font-semibold mb-4 text-stone-900">
+            About <span className="text-forest-600">Tell Your Story</span>
           </h1>
-          <p className="text-zinc-400 text-lg leading-relaxed">
-            A small studio obsessed with turning photos into glowing 3D photo lamps.
+          <p className="text-stone-600 text-lg leading-relaxed">
+            A small, one-person studio obsessed with turning photos into glowing 3D photo lamps.
           </p>
         </div>
 
         {/* Brand story */}
-        <section className="mb-14 p-8 rounded-2xl border border-zinc-800 bg-zinc-900">
-          <h2 className="text-2xl font-bold mb-5">Our Story</h2>
-          {/* Replace this placeholder text with your real story */}
-          <div className="space-y-4 text-zinc-400 leading-relaxed">
+        <section className="mb-14 p-8 rounded-2xl border border-stone-300 bg-white shadow-sm">
+          <p className="font-script text-forest-600 text-xl mb-2">the story behind the lamp</p>
+          <h2 className="font-serif text-2xl font-semibold mb-5 text-stone-900">Our Story</h2>
+          <div className="space-y-4 text-stone-600 leading-relaxed">
             <p>
-              [Your story goes here — how you got into lithophanes, what drives you,
-              what makes your work different. Be personal and specific. Customers
-              who buy from small makers want to know who they're buying from.]
+              It started with an anniversary gift — a photo of us at the cherry blossoms in
+              Washington, D.C., printed as a lithophane. I watched her hold it up to a window for
+              the first time and see our photo glow in a way a framed print never could. That was
+              the moment I knew this was something worth sharing.
             </p>
             <p>
-              [What started as a hobby quickly became something more. Every print
-              is made by hand, checked before shipping, and sent out with care.]
+              I got into 3D printing as a way to grow as an engineer — a hands-on, creative
+              counterpart to the technical work I was already doing. Lithophanes turned out to be
+              the perfect intersection: the precision of engineering and the intimacy of a personal
+              photograph, combined into something you can hold in your hands.
+            </p>
+            <p>
+              Tell Your Story exists because I wanted other people to experience that same moment —
+              the quiet wonder of watching a memory come alive in light. Every lamp leaves here
+              hand-checked and made with care. The reaction when someone sees their photo light up
+              for the first time never gets old.
             </p>
           </div>
         </section>
 
-        {/* Printer photo placeholder */}
+        {/* Printer photo */}
         <section className="mb-14">
-          <h2 className="text-2xl font-bold mb-5">The Equipment</h2>
-          <div className="rounded-2xl border border-zinc-800 bg-zinc-900 overflow-hidden">
+          <h2 className="font-serif text-2xl font-semibold mb-5 text-stone-900">The Equipment</h2>
+          <div className="rounded-2xl border border-stone-300 bg-white overflow-hidden shadow-sm">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/Print in process.jpg"
@@ -41,8 +50,8 @@ export default function AboutPage() {
               className="w-full object-cover"
             />
             <div className="p-6">
-              <h3 className="font-semibold text-zinc-100 mb-2">Bambu Lab A1</h3>
-              <p className="text-zinc-400 text-sm leading-relaxed">
+              <h3 className="font-semibold text-stone-900 mb-2">Bambu Lab A1</h3>
+              <p className="text-stone-600 text-sm leading-relaxed">
                 Every 3D photo lamp is printed on a Bambu Lab A1 — a precision machine known for
                 consistent, high-quality output. Its accuracy and reliability deliver the fine
                 layer detail that lithophane printing demands.
@@ -52,8 +61,8 @@ export default function AboutPage() {
         </section>
 
         {/* Quality guarantee */}
-        <section className="p-8 rounded-2xl border border-amber-400/20 bg-amber-400/5">
-          <h2 className="text-2xl font-bold mb-5">Our Quality Guarantee</h2>
+        <section className="p-8 rounded-2xl border border-forest-500/20 bg-forest-500/5">
+          <h2 className="font-serif text-2xl font-semibold mb-5 text-stone-900">Our Quality Guarantee</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {[
               {
@@ -78,15 +87,16 @@ export default function AboutPage() {
               },
             ].map(({ icon, title, desc }) => (
               <div key={title} className="flex gap-3">
-                <span className="text-amber-400 mt-0.5 shrink-0">{icon}</span>
+                <span className="text-forest-600 mt-0.5 shrink-0">{icon}</span>
                 <div>
-                  <div className="font-medium text-zinc-100 mb-1">{title}</div>
-                  <div className="text-zinc-500 text-sm leading-relaxed">{desc}</div>
+                  <div className="font-medium text-stone-900 mb-1">{title}</div>
+                  <div className="text-stone-600 text-sm leading-relaxed">{desc}</div>
                 </div>
               </div>
             ))}
           </div>
         </section>
+
       </div>
     </div>
   )

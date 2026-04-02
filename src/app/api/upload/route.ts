@@ -1,10 +1,14 @@
-import { writeFile, mkdir } from 'fs/promises'
 import { NextRequest, NextResponse } from 'next/server'
-import path from 'path'
+import { v2 as cloudinary } from 'cloudinary'
 import { randomUUID } from 'crypto'
 
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key:    process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+})
+
 export async function POST(request: NextRequest) {
-  // request.formData() parses multipart/form-data without any extra library
   const formData = await request.formData()
   const file = formData.get('photo') as File | null
 
@@ -12,7 +16,6 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'No file provided' }, { status: 400 })
   }
 
-  // Basic validation
   if (!file.type.startsWith('image/')) {
     return NextResponse.json({ error: 'File must be an image' }, { status: 400 })
   }
@@ -20,18 +23,21 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'File too large (max 10MB)' }, { status: 400 })
   }
 
-  // Build a safe, unique filename — never trust the original filename from the user
-  const ext      = file.name.split('.').pop()?.toLowerCase().replace(/[^a-z0-9]/g, '') || 'jpg'
-  const filename = `${randomUUID()}.${ext}`
-
-  // Ensure the uploads directory exists (creates it if missing)
-  const uploadDir = path.join(process.cwd(), 'public', 'uploads')
-  await mkdir(uploadDir, { recursive: true })
-
-  // Convert the File object to a Node.js Buffer and write to disk
   const bytes  = await file.arrayBuffer()
   const buffer = Buffer.from(bytes)
-  await writeFile(path.join(uploadDir, filename), buffer)
 
-  return NextResponse.json({ filename })
+  // Upload buffer to Cloudinary, return the secure CDN URL
+  const secureUrl = await new Promise<string>((resolve, reject) => {
+    const publicId = `lithophane-orders/${randomUUID()}`
+    cloudinary.uploader.upload_stream(
+      { public_id: publicId, overwrite: false },
+      (error, result) => {
+        if (error || !result) return reject(error ?? new Error('Upload failed'))
+        resolve(result.secure_url)
+      }
+    ).end(buffer)
+  })
+
+  // Return as `filename` to keep the existing form + webhook code unchanged
+  return NextResponse.json({ filename: secureUrl })
 }
