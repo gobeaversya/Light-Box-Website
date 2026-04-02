@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
+
+export const dynamic = 'force-dynamic'
 import { stripe } from '@/lib/stripe'
 import { prisma } from '@/lib/prisma'
 

@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { v2 as cloudinary } from 'cloudinary'
+
+export const dynamic = 'force-dynamic'
 import { randomUUID } from 'crypto'
 
 cloudinary.config({

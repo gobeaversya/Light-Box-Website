@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 
+export const dynamic = 'force-dynamic'
+
 const VALID_STATUSES = ['Pending', 'Printing', 'Shipped', 'Complete']
 
 // PATCH /api/orders/:id — updates the fulfillment status of an order.

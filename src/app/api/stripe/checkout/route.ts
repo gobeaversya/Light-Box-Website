@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
+
+export const dynamic = 'force-dynamic'
 import { stripe, PRICES, RUSH_FEE, SHIPPING, SIZE_LABELS } from '@/lib/stripe'
 
 export async function POST(request: NextRequest) {
