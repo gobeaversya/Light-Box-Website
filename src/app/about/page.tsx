@@ -19,23 +19,55 @@ export default function AboutPage() {
           <h2 className="font-serif text-2xl font-semibold mb-5 text-stone-900">Our Story</h2>
           <div className="space-y-4 text-stone-600 leading-relaxed">
             <p>
-              It started with an anniversary gift — a photo of us at the cherry blossoms in
+              It started with an anniversary gift, a photo of us at the cherry blossoms in
               Washington, D.C., printed as a lithophane. I watched her hold it up to a window for
               the first time and see our photo glow in a way a framed print never could. That was
               the moment I knew this was something worth sharing.
             </p>
             <p>
-              I got into 3D printing as a way to grow as an engineer — a hands-on, creative
+              I got into 3D printing as a way to grow as an engineer, a hands-on, creative
               counterpart to the technical work I was already doing. Lithophanes turned out to be
               the perfect intersection: the precision of engineering and the intimacy of a personal
               photograph, combined into something you can hold in your hands.
             </p>
             <p>
-              Tell Your Story exists because I wanted other people to experience that same moment —
-              the quiet wonder of watching a memory come alive in light. Every lamp leaves here
+              Tell Your Story exists because I wanted other people to experience that same moment. 
+              The quiet wonder of watching a memory come alive in light. Every lamp leaves here
               hand-checked and made with care. The reaction when someone sees their photo light up
               for the first time never gets old.
             </p>
+          </div>
+        </section>
+
+        {/* Cherry blossom before/after */}
+        <section className="mb-14">
+          <h2 className="font-serif text-2xl font-semibold mb-5 text-stone-900">The First One</h2>
+          <p className="text-stone-600 mb-5 leading-relaxed">
+            The cherry blossom photo that started it all — the same one described in the story above.
+          </p>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="relative rounded-2xl overflow-hidden border border-stone-300 shadow-sm aspect-[3/4]">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/unlit blossoms.jpeg"
+                alt="Cherry blossom lithophane unlit"
+                className="w-full h-full object-cover object-[center_40%]"
+              />
+              <div className="absolute bottom-3 left-3 bg-black/50 text-white text-xs font-medium px-2.5 py-1 rounded-full backdrop-blur-sm">
+                unlit
+              </div>
+            </div>
+            <div className="relative rounded-2xl overflow-hidden border border-stone-300 shadow-sm aspect-[3/4]">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/Lit up Blossoms.jpeg"
+                alt="Cherry blossom lithophane lit up"
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute bottom-3 left-3 bg-black/50 text-white text-xs font-medium px-2.5 py-1 rounded-full backdrop-blur-sm">
+                lit
+              </div>
+            </div>
           </div>
         </section>
 

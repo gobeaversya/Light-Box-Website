@@ -352,13 +352,29 @@ export default function HomePage() {
               </div>
             </div>
 
-            <div className="flex items-center justify-center md:justify-end">
-              <blockquote className="relative p-8 rounded-2xl border border-stone-200 bg-white shadow-sm max-w-sm">
-                <div className="font-script text-forest-600 text-4xl leading-snug">
-                  "Every lamp is made one at a time, by hand."
+            <div className="flex flex-col gap-3">
+              <div className="relative rounded-2xl overflow-hidden border border-stone-200 shadow-sm aspect-[3/4]">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/unlit blossoms.jpeg"
+                  alt="Cherry blossom lithophane unlit"
+                  className="w-full h-full object-cover object-[center_40%]"
+                />
+                <div className="absolute bottom-3 left-3 bg-black/50 text-white text-xs font-medium px-2.5 py-1 rounded-full backdrop-blur-sm">
+                  unlit
                 </div>
-                <footer className="mt-4 text-stone-500 text-sm">— Tell Your Story</footer>
-              </blockquote>
+              </div>
+              <div className="relative rounded-2xl overflow-hidden border border-stone-200 shadow-sm aspect-[3/4]">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/Lit up Blossoms.jpeg"
+                  alt="Cherry blossom lithophane lit up"
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute bottom-3 left-3 bg-black/50 text-white text-xs font-medium px-2.5 py-1 rounded-full backdrop-blur-sm">
+                  lit
+                </div>
+              </div>
             </div>
           </div>
         </div>
