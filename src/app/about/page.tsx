@@ -43,7 +43,7 @@ export default function AboutPage() {
         <section className="mb-14">
           <h2 className="font-serif text-2xl font-semibold mb-5 text-stone-900">The First One</h2>
           <p className="text-stone-600 mb-5 leading-relaxed">
-            The cherry blossom photo that started it all — the same one described in the story above.
+            The cherry blossom photo that started it all, the same one described in the story above.
           </p>
           <div className="grid grid-cols-2 gap-4">
             <div className="relative rounded-2xl overflow-hidden border border-stone-300 shadow-sm aspect-[3/4]">
@@ -84,7 +84,7 @@ export default function AboutPage() {
             <div className="p-6">
               <h3 className="font-semibold text-stone-900 mb-2">Bambu Lab A1</h3>
               <p className="text-stone-600 text-sm leading-relaxed">
-                Every 3D photo lamp is printed on a Bambu Lab A1 — a precision machine known for
+                Every 3D photo lamp is printed on a Bambu Lab A1, a precision machine known for
                 consistent, high-quality output. Its accuracy and reliability deliver the fine
                 layer detail that lithophane printing demands.
               </p>
@@ -105,7 +105,7 @@ export default function AboutPage() {
               {
                 icon: '✦',
                 title: 'Photo Optimization',
-                desc: 'We adjust contrast and detail for 3D printing — not just a straight conversion.',
+                desc: 'We adjust contrast and detail for 3D printing, not just a straight conversion.',
               },
               {
                 icon: '✦',

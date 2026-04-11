@@ -21,9 +21,9 @@ const caveat = Caveat({
 })
 
 export const metadata: Metadata = {
-  title: 'Tell Your Story — Custom 3D Photo Lamps',
+  title: 'Tell Your Story · Custom 3D Photo Lamps',
   description:
-    'Turn your favorite photos into stunning glowing 3D photo lamps. Handcrafted and backlit — your memories, transformed into light.',
+    'Turn your favorite photos into stunning glowing 3D photo lamps. Handcrafted and backlit, your memories transformed into light.',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

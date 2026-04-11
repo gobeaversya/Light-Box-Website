@@ -3,22 +3,16 @@
 import { useState, useRef, useCallback, useEffect } from 'react'
 import { useSearchParams } from 'next/navigation'
 
-const SIZES = [
-  { slug: '4x5',  label: '4×5"',  price: 40 },
-  { slug: '6x8',  label: '6×8"',  price: 60 },
-  { slug: '8x10', label: '8×10"', price: 80 },
-]
+const PRODUCT = { slug: 'standard', label: '6.5×6.5"', price: 39.99 }
 
 const RUSH_FEE = 15
 const SHIPPING  = 9
 
 export default function OrderForm() {
   const searchParams = useSearchParams()
+  // Kept for compatibility with old links; we only have one size now.
+  void searchParams
 
-  // Pre-select size if ?size= is in the URL (set by ProductCard links)
-  const defaultSize = SIZES.find(s => s.slug === searchParams.get('size'))?.slug ?? '4x5'
-
-  const [selectedSize, setSelectedSize] = useState(defaultSize)
   const [rush, setRush] = useState(false)
   const [notes, setNotes] = useState('')
 
@@ -35,56 +29,18 @@ export default function OrderForm() {
 
   const fileInputRef = useRef<HTMLInputElement>(null)
 
-  const selectedSizeData = SIZES.find(s => s.slug === selectedSize)!
-  const subtotal = selectedSizeData.price + (rush ? RUSH_FEE : 0) + SHIPPING
+  const subtotal = PRODUCT.price + (rush ? RUSH_FEE : 0) + SHIPPING
 
-  // ── Image processing ──────────────────────────────────────────────────────
-  // When the user uploads a photo, we:
-  //   1. Check its resolution (warn if too low)
-  //   2. Generate a lithophane preview using the Canvas API
-  //
-  // How the preview works: A real lithophane is thick where the photo is dark
-  // (thick plastic blocks light → appears dark when backlit) and thin where
-  // it's bright (thin plastic lets light through → appears bright when backlit).
-  // So to approximate what the backlit lithophane will look like, we:
-  //   - Convert to grayscale (luminance formula weights channels by human perception)
-  //   - Invert the colors (dark ↔ light)
-  // The result is a rough approximation — actual lithophanes look even better.
+  // Show the uploaded photo as a full-color preview, and check its resolution
+  // to warn if it's too low to print crisp detail.
   const generatePreview = useCallback((file: File) => {
     const objectUrl = URL.createObjectURL(file)
     const img = new Image()
 
     img.onload = () => {
-      // Resolution check — 1000px on shortest side is the minimum for good detail
       const minDim = Math.min(img.naturalWidth, img.naturalHeight)
       setResolutionOk(minDim >= 1000)
-
-      // Scale the preview canvas to at most 480px wide/tall for performance
-      const scale   = Math.min(480 / img.naturalWidth, 480 / img.naturalHeight, 1)
-      const canvas  = document.createElement('canvas')
-      canvas.width  = Math.round(img.naturalWidth  * scale)
-      canvas.height = Math.round(img.naturalHeight * scale)
-
-      const ctx = canvas.getContext('2d')!
-      ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
-
-      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height)
-      const d = imageData.data // Flat Uint8ClampedArray: [R,G,B,A, R,G,B,A, ...]
-
-      for (let i = 0; i < d.length; i += 4) {
-        // Weighted grayscale (ITU-R BT.601 luma coefficients)
-        const gray    = 0.299 * d[i] + 0.587 * d[i + 1] + 0.114 * d[i + 2]
-        const inverted = 255 - gray // Invert: approximate backlit appearance
-        d[i]     = inverted  // R
-        d[i + 1] = inverted  // G
-        d[i + 2] = inverted  // B
-        // d[i + 3] = alpha — leave unchanged
-      }
-
-      ctx.putImageData(imageData, 0, 0)
-      setPreviewUrl(canvas.toDataURL('image/jpeg', 0.85))
-
-      URL.revokeObjectURL(objectUrl) // Free memory
+      setPreviewUrl(objectUrl)
     }
 
     img.src = objectUrl
@@ -143,7 +99,7 @@ export default function OrderForm() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          size: selectedSize,
+          size: PRODUCT.slug,
           rush,
           notes,
           photoFilename,
@@ -168,41 +124,19 @@ export default function OrderForm() {
       {/* ── LEFT COLUMN: Order options ──────────────────────────────────── */}
       <div className="space-y-6">
 
-        {/* Size selector */}
+        {/* Product */}
         <div className="p-6 rounded-2xl border border-zinc-800 bg-zinc-900">
-          <h2 className="font-semibold text-zinc-100 mb-4">1. Choose Your Size</h2>
-          <div className="space-y-3">
-            {SIZES.map((s) => (
-              <label
-                key={s.slug}
-                className={`flex items-center justify-between p-4 rounded-xl border cursor-pointer transition-all
-                  ${selectedSize === s.slug
-                    ? 'border-amber-400/60 bg-amber-400/5'
-                    : 'border-zinc-700 hover:border-zinc-600'}`}
-              >
-                <div className="flex items-center gap-3">
-                  {/* Custom radio button */}
-                  <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center transition-colors
-                    ${selectedSize === s.slug ? 'border-amber-400' : 'border-zinc-600'}`}
-                  >
-                    {selectedSize === s.slug && (
-                      <div className="w-1.5 h-1.5 rounded-full bg-amber-400" />
-                    )}
-                  </div>
-                  <input
-                    type="radio"
-                    name="size"
-                    value={s.slug}
-                    checked={selectedSize === s.slug}
-                    onChange={() => setSelectedSize(s.slug)}
-                    className="sr-only" // visually hidden — the div above is the visible indicator
-                  />
-                  <span className="font-medium text-zinc-100">{s.label}</span>
-                </div>
-                <span className="text-amber-400 font-bold">${s.price}</span>
-              </label>
-            ))}
+          <h2 className="font-semibold text-zinc-100 mb-4">1. Your 3D Photo Lamp</h2>
+          <div className="flex items-center justify-between p-4 rounded-xl border border-amber-400/60 bg-amber-400/5">
+            <div>
+              <div className="font-medium text-zinc-100">{PRODUCT.label} Lithophane</div>
+              <div className="text-zinc-500 text-xs mt-0.5">Our standard square size</div>
+            </div>
+            <span className="text-amber-400 font-bold">${PRODUCT.price.toFixed(2)}</span>
           </div>
+          <p className="text-zinc-500 text-xs mt-3">
+            Need a different size, color, or custom background? <a href="/#custom" className="text-amber-400 hover:underline">Request a custom quote.</a>
+          </p>
         </div>
 
         {/* Rush order toggle */}
@@ -237,7 +171,7 @@ export default function OrderForm() {
         {/* Notes */}
         <div className="p-6 rounded-2xl border border-zinc-800 bg-zinc-900">
           <h2 className="font-semibold text-zinc-100 mb-1">3. Order Notes <span className="text-zinc-500 font-normal">(optional)</span></h2>
-          <p className="text-zinc-500 text-sm mb-4">Any special instructions — cropping preferences, which person to focus on, etc.</p>
+          <p className="text-zinc-500 text-sm mb-4">Any special instructions, like cropping preferences or which person to focus on.</p>
           <textarea
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
@@ -255,12 +189,12 @@ export default function OrderForm() {
           <h2 className="font-semibold text-zinc-100 mb-4">Order Summary</h2>
           <div className="space-y-2 text-sm">
             <div className="flex justify-between">
-              <span className="text-zinc-400">{selectedSizeData.label} 3D Photo Lamp</span>
-              <span className="text-zinc-200">${selectedSizeData.price}.00</span>
+              <span className="text-zinc-400">{PRODUCT.label} 3D Photo Lamp</span>
+              <span className="text-zinc-200">${PRODUCT.price.toFixed(2)}</span>
             </div>
             <div className="flex justify-between">
               <span className="text-zinc-400">Rush processing</span>
-              <span className={rush ? 'text-zinc-200' : 'text-zinc-600'}>{rush ? '+$15.00' : '—'}</span>
+              <span className={rush ? 'text-zinc-200' : 'text-zinc-600'}>{rush ? '+$15.00' : 'none'}</span>
             </div>
             <div className="flex justify-between">
               <span className="text-zinc-400">Shipping</span>
@@ -268,7 +202,7 @@ export default function OrderForm() {
             </div>
             <div className="border-t border-zinc-700 pt-2 mt-2 flex justify-between text-base font-semibold">
               <span className="text-zinc-200">Total</span>
-              <span className="text-amber-400">${subtotal}.00</span>
+              <span className="text-amber-400">${subtotal.toFixed(2)}</span>
             </div>
           </div>
         </div>
@@ -363,27 +297,20 @@ export default function OrderForm() {
           )}
         </div>
 
-        {/* Lithophane preview */}
+        {/* Photo preview */}
         {previewUrl && (
           <div className="p-6 rounded-2xl border border-zinc-800 bg-zinc-900">
-            <h2 className="font-semibold text-zinc-100 mb-1">Lamp Preview</h2>
+            <h2 className="font-semibold text-zinc-100 mb-1">Your Photo</h2>
             <p className="text-zinc-500 text-xs mb-4">
-              Approximate look when backlit — grayscale + inverted. The real thing looks even better.
+              This is the photo we'll use for your lamp.
             </p>
             <div className="relative rounded-xl overflow-hidden bg-zinc-950 flex items-center justify-center">
-              {/* Simulated backlight glow behind the preview */}
-              <div className="absolute inset-0 opacity-40"
-                style={{ background: 'radial-gradient(ellipse at 50% 50%, rgba(255,200,100,0.3) 0%, transparent 70%)' }}
-              />
               <img
                 src={previewUrl}
-                alt="Lithophane preview"
+                alt="Uploaded photo preview"
                 className="relative z-10 max-h-72 w-auto object-contain"
               />
             </div>
-            <p className="text-zinc-600 text-xs mt-3">
-              ℹ This is a rough approximation. Actual lithophanes have greater depth and contrast when backlit.
-            </p>
           </div>
         )}
 
@@ -411,7 +338,7 @@ export default function OrderForm() {
               Processing…
             </span>
           ) : (
-            `Continue to Payment — $${subtotal}.00`
+            `Continue to Payment · $${subtotal.toFixed(2)}`
           )}
         </button>
 

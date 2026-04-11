@@ -1,27 +1,12 @@
 import Link from 'next/link'
 import ProductCard from '@/components/ProductCard'
 
-const products = [
-  {
-    size: '4×5"',
-    slug: '4x5',
-    price: 40,
-    description: 'Perfect for a bedside table, desk, or shelf. Most popular size for single portraits.',
-  },
-  {
-    size: '6×8"',
-    slug: '6x8',
-    price: 60,
-    description: 'Great for group photos and landscapes. Makes a stunning centerpiece or gift.',
-    popular: true,
-  },
-  {
-    size: '8×10"',
-    slug: '8x10',
-    price: 80,
-    description: 'Maximum impact. Your most cherished photo displayed at full, dramatic scale.',
-  },
-]
+const product = {
+  size: '6.5×6.5"',
+  slug: 'standard',
+  price: 39.99,
+  description: 'Our standard square 3D photo lamp. Perfect for a bedside table, desk, or shelf. Any photo you love, transformed into glowing light.',
+}
 
 const reviews = [
   {
@@ -63,7 +48,7 @@ const useCases = [
   {
     emoji: '🐉',
     title: 'Fantasy & Hobbies',
-    story: 'Their DnD character art from three years of campaigns. Custom printed, one of a kind — and they will lose their mind when they see it.',
+    story: 'Their DnD character art from three years of campaigns. Custom printed, one of a kind, and they will lose their mind when they see it.',
     style: 'bg-violet-50/60 border-violet-200/50',
   },
   {
@@ -111,7 +96,7 @@ const useCases = [
   {
     emoji: '🎁',
     title: "The Gift Nobody Expects",
-    story: "If you're stuck on a gift for someone who has everything — this is it. They will not see it coming.",
+    story: "If you're stuck on a gift for someone who has everything, this is it. They will not see it coming.",
     style: 'bg-forest-500/5 border-forest-500/20',
   },
 ]
@@ -143,7 +128,7 @@ export default function HomePage() {
 
           <p className="text-lg sm:text-xl text-stone-600 max-w-2xl mx-auto mb-4 leading-relaxed font-sans">
             A sports moment. A wedding dance. Cherry blossoms in the spring. A DnD character
-            that took three sessions to build. Whatever photo holds the memory — we turn it
+            that took three sessions to build. Whatever photo holds the memory, we turn it
             into a glowing 3D lamp, made by hand.
           </p>
 
@@ -155,7 +140,7 @@ export default function HomePage() {
               className="w-full sm:w-auto px-8 py-4 bg-forest-600 text-cream-50 rounded-full font-semibold text-lg
                 hover:bg-forest-700 transition-all shadow-[0_4px_14px_rgba(59,85,48,0.35)] hover:shadow-[0_8px_28px_rgba(59,85,48,0.45)] active:scale-95"
             >
-              Order Yours — From $40
+              Order Yours · $39.99
             </Link>
             <Link
               href="/about"
@@ -241,7 +226,7 @@ export default function HomePage() {
             How does a <span className="text-forest-600">3D photo lamp</span> work?
           </h2>
           <p className="text-stone-600 text-lg max-w-2xl mx-auto leading-relaxed mb-14">
-            We 3D print your photo using a technique called lithophane — varying the thickness of
+            We 3D print your photo using a technique called lithophane, varying the thickness of
             the material so light passes through at different intensities. In daylight it looks like
             a beautiful white relief panel. Backlit, your photo glows with stunning depth and contrast.
           </p>
@@ -274,18 +259,47 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── Product Cards ────────────────────────────────────────────────── */}
+      {/* ── Product ──────────────────────────────────────────────────────── */}
       <section className="py-24 bg-stone-100 border-y border-stone-300">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+        <div className="max-w-2xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-12">
-            <h2 className="font-serif text-3xl sm:text-4xl font-semibold mb-3 text-stone-900">Choose Your Size</h2>
-            <p className="text-stone-600">All sizes include design optimization. Flat $9 shipping.</p>
+            <h2 className="font-serif text-3xl sm:text-4xl font-semibold mb-3 text-stone-900">Our 3D Photo Lamp</h2>
+            <p className="text-stone-600">Includes design optimization. Flat $9 shipping.</p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {products.map((p) => (
-              <ProductCard key={p.slug} {...p} />
+          <ProductCard {...product} />
+        </div>
+      </section>
+
+      {/* ── Custom Quote ─────────────────────────────────────────────────── */}
+      <section id="custom" className="py-24 bg-cream-50">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 text-center">
+          <p className="font-script text-forest-600 text-xl mb-3">want something different?</p>
+          <h2 className="font-serif text-3xl sm:text-4xl font-semibold mb-4 text-stone-900">
+            Custom <span className="text-forest-600">Quotes</span>
+          </h2>
+          <p className="text-stone-600 text-lg leading-relaxed mb-8">
+            Want a different size, a colored background, a unique shape, or a larger bulk order?
+            Send a quick message with what you have in mind and we'll reply with a quote.
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10 text-left">
+            {[
+              { title: 'Custom Sizes', desc: 'Larger formats, panoramic, or miniature sizes.' },
+              { title: 'Colored Backgrounds', desc: 'Choose a background color to match your space.' },
+              { title: 'Bulk & Wedding Orders', desc: 'Favors, multi-photo sets, and group gifts.' },
+            ].map(({ title, desc }) => (
+              <div key={title} className="p-5 rounded-2xl border border-stone-200 bg-white shadow-sm">
+                <div className="font-semibold text-stone-900 mb-1 text-sm">{title}</div>
+                <div className="text-stone-600 text-sm leading-relaxed">{desc}</div>
+              </div>
             ))}
           </div>
+          {/* TODO: replace the mailto address below with your real contact email */}
+          <a
+            href="mailto:your-email@example.com?subject=Custom%20Lithophane%20Quote"
+            className="inline-block px-8 py-3 bg-forest-600 text-cream-50 rounded-full font-semibold hover:bg-forest-700 transition-all shadow-[0_4px_14px_rgba(59,85,48,0.35)] hover:shadow-[0_8px_28px_rgba(59,85,48,0.45)]"
+          >
+            Request a Quote
+          </a>
         </div>
       </section>
 
@@ -302,7 +316,7 @@ export default function HomePage() {
               {
                 step: '01',
                 title: 'Upload Your Photo',
-                desc: 'Choose any photo — portrait, family moment, pet, or landscape. Upload directly or share a Google Drive / Dropbox link.',
+                desc: 'Choose any photo: portrait, family moment, pet, or landscape. Upload directly or share a Google Drive / Dropbox link.',
               },
               {
                 step: '02',
@@ -312,7 +326,7 @@ export default function HomePage() {
               {
                 step: '03',
                 title: 'You Receive Magic',
-                desc: 'Your 3D photo lamp arrives ready to display. Hold it to a window or use the included light source — watch your photo come alive.',
+                desc: 'Your 3D photo lamp arrives ready to display. Hold it to a window or use the included light source, and watch your photo come alive.',
               },
             ].map(({ step, title, desc }) => (
               <div key={step} className="relative">
@@ -336,12 +350,12 @@ export default function HomePage() {
               </h2>
               <div className="space-y-4 text-stone-600 leading-relaxed">
                 <p>
-                  My first lithophane was an anniversary gift for my girlfriend — a photo of us at the
+                  My first lithophane was an anniversary gift for my girlfriend, a photo of us at the
                   cherry blossoms in Washington, D.C. I watched her hold it up to a window and see our
                   photo glow in a way a framed print never could. That was the moment.
                 </p>
                 <p>
-                  I got into 3D printing to grow as an engineer — a hands-on outlet alongside my
+                  I got into 3D printing to grow as an engineer, a hands-on outlet alongside my
                   technical work. Lithophanes turned out to be the perfect intersection of precision
                   and something deeply personal.
                 </p>
@@ -395,7 +409,7 @@ export default function HomePage() {
               <div key={name} className="p-6 rounded-2xl border border-stone-200 bg-white shadow-sm">
                 <div className="text-forest-500 text-sm mb-3">{'★'.repeat(stars)}</div>
                 <p className="text-stone-600 leading-relaxed mb-4">"{text}"</p>
-                <p className="text-stone-500 text-sm">— {name}</p>
+                <p className="text-stone-500 text-sm">· {name}</p>
               </div>
             ))}
           </div>
@@ -409,7 +423,7 @@ export default function HomePage() {
             Ready to see your photo <span className="text-forest-600">glow</span>?
           </h2>
           <p className="text-stone-600 mb-8 leading-relaxed">
-            Starting at $40 with flat-rate $9 shipping. Ships within 5–7 business days,
+            $39.99 with flat-rate $9 shipping. Ships within 5 to 7 business days,
             or 2–3 days with rush processing.
           </p>
           <Link

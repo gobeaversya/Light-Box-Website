@@ -4,6 +4,7 @@ import Stripe from 'stripe'
 export const dynamic = 'force-dynamic'
 import { stripe } from '@/lib/stripe'
 import { prisma } from '@/lib/prisma'
+import { sendNewOrderEmail } from '@/lib/email'
 
 // IMPORTANT: We must read the raw request body as text before Stripe can verify the signature.
 // If you parse it as JSON first (which Next.js would normally do), the body changes slightly
@@ -57,6 +58,19 @@ export async function POST(request: NextRequest) {
           paymentStatus: 'paid',
           status:        'Pending',
         },
+      })
+
+      // Fire-and-forget admin notification. Failures are logged inside the helper
+      // and must not block the webhook response.
+      await sendNewOrderEmail({
+        customerName,
+        customerEmail,
+        size: size ?? 'unknown',
+        rush: rush === 'true',
+        amountPaidCents: session.amount_total ?? 0,
+        notes: notes || null,
+        photoFilename: photoFilename || null,
+        photoLink: photoLink || null,
       })
     } catch (dbErr) {
       // Log but don't return an error — Stripe would retry and create duplicate orders.

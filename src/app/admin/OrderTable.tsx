@@ -126,12 +126,12 @@ export default function OrderTable({ initialOrders }: { initialOrders: Order[] }
               <div className="space-y-2 text-sm">
                 {order.photoFilename ? (
                   <a
-                    href={`/uploads/${order.photoFilename}`}
+                    href={order.photoFilename}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1.5 text-amber-400 hover:text-amber-300 transition-colors"
                   >
-                    ⬇ Download uploaded photo
+                    ⬇ View uploaded photo
                   </a>
                 ) : (
                   <span className="text-zinc-600 text-xs">No file uploaded</span>
@@ -160,7 +160,7 @@ export default function OrderTable({ initialOrders }: { initialOrders: Order[] }
               {order.notes ? (
                 <p className="text-zinc-300 text-sm leading-relaxed">{order.notes}</p>
               ) : (
-                <span className="text-zinc-600 text-sm">—</span>
+                <span className="text-zinc-600 text-sm">none</span>
               )}
             </div>
 

@@ -20,7 +20,7 @@ export async function POST(request: NextRequest) {
       price_data: {
         currency: 'usd',
         product_data: {
-          name: `Custom Lithophane — ${SIZE_LABELS[size]}`,
+          name: `Custom Lithophane · ${SIZE_LABELS[size]}`,
           description: `3D printed photo lithophane, ${SIZE_LABELS[size]}`,
         },
         unit_amount: PRICES[size], // In cents
@@ -35,7 +35,7 @@ export async function POST(request: NextRequest) {
         currency: 'usd',
         product_data: {
           name: 'Rush Processing',
-          description: 'Ships in 2–3 business days instead of 5–7',
+          description: 'Ships in 2 to 3 business days instead of 5 to 7',
         },
         unit_amount: RUSH_FEE,
       },
