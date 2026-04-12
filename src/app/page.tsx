@@ -20,13 +20,16 @@ const reviews = [
     stars: 5,
   },
   {
-    name: 'Priya K.',
+    name: 'Riya D.',
     text: 'Fast shipping, incredible quality. The detail in the backlit photo is unreal. Already ordered my second one.',
     stars: 5,
   },
 ]
 
+// Grouped by theme with a shared color family per group, so the masonry reads
+// as distinct color zones as the eye scans down each column.
 const useCases = [
+  // Love & Memory (rose)
   {
     emoji: '🌸',
     title: 'Cherry Blossoms',
@@ -34,70 +37,78 @@ const useCases = [
     style: 'bg-rose-50 border-rose-200/60',
   },
   {
-    emoji: '🏀',
-    title: 'Sports Moments',
-    story: 'Last season. His number. Forever lit.',
-    style: 'bg-white border-stone-200',
-  },
-  {
     emoji: '💍',
     title: 'Anniversaries & Weddings',
     story: 'The proposal photo, backlit on the mantle. The first dance, glowing on the bookshelf. The one she always wanted to frame.',
-    style: 'bg-white border-stone-200',
-  },
-  {
-    emoji: '🐉',
-    title: 'Fantasy & Hobbies',
-    story: 'Their DnD character art from three years of campaigns. Custom printed, one of a kind, and they will lose their mind when they see it.',
-    style: 'bg-violet-50/60 border-violet-200/50',
-  },
-  {
-    emoji: '🎸',
-    title: 'Album Covers & Music',
-    story: 'Your favorite record in 3D. Their first show.',
-    style: 'bg-white border-stone-200',
+    style: 'bg-rose-50 border-rose-200/60',
   },
   {
     emoji: '🐾',
     title: 'Pet Portraits',
     story: 'A lot of people order these as memorials. Before they were gone, they were your whole world. It means something to have them glow softly on your shelf.',
-    style: 'bg-amber-50/60 border-amber-200/50',
-  },
-  {
-    emoji: '🎓',
-    title: 'Graduation Day',
-    story: 'The photo your mom has been asking you to print for six months.',
-    style: 'bg-white border-stone-200',
+    style: 'bg-rose-50 border-rose-200/60',
   },
   {
     emoji: '🏠',
     title: 'Family Moments',
     story: "The photo you've been meaning to frame for three years. Frame it in light.",
-    style: 'bg-cream-100 border-stone-200',
+    style: 'bg-rose-50 border-rose-200/60',
+  },
+
+  // Action & Sports (sky)
+  {
+    emoji: '🏀',
+    title: 'Sports Moments',
+    story: 'Last season. His number. Forever lit.',
+    style: 'bg-sky-50 border-sky-200/60',
   },
   {
     emoji: '🏒',
     title: 'Lacrosse & Hockey',
     story: 'The action shot nobody else has. The one where you can actually see their face.',
-    style: 'bg-white border-stone-200',
+    style: 'bg-sky-50 border-sky-200/60',
+  },
+
+  // Creative & Artistic (violet)
+  {
+    emoji: '🐉',
+    title: 'Fantasy & Hobbies',
+    story: 'Their DnD character art from three years of campaigns. Custom printed, one of a kind, and they will lose their mind when they see it.',
+    style: 'bg-violet-50 border-violet-200/60',
+  },
+  {
+    emoji: '🎸',
+    title: 'Album Covers & Music',
+    story: 'Your favorite record in 3D. Their first show.',
+    style: 'bg-violet-50 border-violet-200/60',
   },
   {
     emoji: '📚',
     title: 'Book Covers & Art',
     story: 'Your favorite book cover, a piece of fan art, or an illustration that lives in your head rent-free.',
-    style: 'bg-white border-stone-200',
+    style: 'bg-violet-50 border-violet-200/60',
+  },
+
+  // Warm & Glowing (amber)
+  {
+    emoji: '🎓',
+    title: 'Graduation Day',
+    story: 'The photo your mom has been asking you to print for six months.',
+    style: 'bg-amber-50 border-amber-200/60',
   },
   {
     emoji: '✨',
     title: 'Fairy Lights & Nature',
     story: 'Golden hour. String lights on a porch. The kind of photo that looks better backlit than any other way.',
-    style: 'bg-yellow-50/60 border-yellow-200/50',
+    style: 'bg-amber-50 border-amber-200/60',
   },
+
+  // Capstone (forest) — ends on the brand's core message
   {
     emoji: '🎁',
     title: "The Gift Nobody Expects",
     story: "If you're stuck on a gift for someone who has everything, this is it. They will not see it coming.",
-    style: 'bg-forest-500/5 border-forest-500/20',
+    style: 'bg-forest-500/10 border-forest-500/30',
   },
 ]
 
@@ -160,29 +171,21 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── See It In Action ─────────────────────────────────────────────── */}
+      {/* ── See It In Action (hidden — add back when a real MP4 is available) ─
       <section className="py-20 bg-cream-50">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 text-center">
           <h2 className="font-serif text-3xl sm:text-4xl font-semibold mb-3 text-stone-900">
             See It <span className="text-forest-600">Come Alive</span>
           </h2>
           <p className="text-stone-600 mb-8">Dark panel. Add light. Watch your photo appear.</p>
-
           <div className="relative rounded-2xl overflow-hidden border border-stone-200 bg-stone-100 shadow-sm">
-            <video
-              autoPlay
-              muted
-              loop
-              playsInline
-              className="w-full relative z-10"
-            >
-              <source src="/Working Lithophane.MOV" type="video/mp4" />
-              <source src="/Working Lithophane.MOV" type="video/quicktime" />
-              Your browser does not support video playback.
+            <video autoPlay muted loop playsInline className="w-full relative z-10">
+              <source src="/working-lithophane.mp4" type="video/mp4" />
             </video>
           </div>
         </div>
       </section>
+      ──────────────────────────────────────────────────────────────────────── */}
 
       {/* ── Any Photo Section ─────────────────────────────────────────────── */}
       <section className="py-24 bg-stone-100 border-y border-stone-300">
