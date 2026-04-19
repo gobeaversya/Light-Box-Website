@@ -1,10 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
+import { isRateLimited, getClientIp } from '@/lib/rate-limit'
 
 export const dynamic = 'force-dynamic'
 import { stripe, PRICES, RUSH_FEE, SHIPPING, SIZE_LABELS } from '@/lib/stripe'
 
 export async function POST(request: NextRequest) {
+  const ip = getClientIp(request)
+
+  // Allow 10 checkout sessions per IP per 15 minutes
+  if (isRateLimited(`checkout:${ip}`, 10, 15 * 60 * 1000)) {
+    return NextResponse.json(
+      { error: 'Too many requests. Please wait a few minutes.' },
+      { status: 429 },
+    )
+  }
+
   const { size, rush, notes, photoFilename, photoLink } = await request.json()
 
   // Validate the size against our known prices

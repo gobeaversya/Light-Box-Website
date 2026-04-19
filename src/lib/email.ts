@@ -29,11 +29,20 @@ export async function sendNewOrderEmail(order: OrderEmailPayload) {
   }
 
   const amount = `$${(order.amountPaidCents / 100).toFixed(2)}`
-  const photoBlock = order.photoFilename
-    ? `<p><a href="${order.photoFilename}" style="background:#f59e0b;color:#111;padding:10px 18px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block">View uploaded photo</a></p>`
-    : order.photoLink
-      ? `<p><a href="${order.photoLink}" style="background:#f59e0b;color:#111;padding:10px 18px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block">Open drive link</a></p>`
-      : `<p style="color:#b91c1c"><strong>No photo was provided.</strong> Reach out to the customer.</p>`
+
+  // Only allow https:// URLs in email links to prevent javascript: or data: injection
+  const safePhotoUrl = order.photoFilename && isSafeUrl(order.photoFilename)
+    ? order.photoFilename : null
+  const safePhotoLink = order.photoLink && isSafeUrl(order.photoLink)
+    ? order.photoLink : null
+
+  const photoBlock = safePhotoUrl
+    ? `<p><a href="${escapeAttr(safePhotoUrl)}" style="background:#f59e0b;color:#111;padding:10px 18px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block">View uploaded photo</a></p>`
+    : safePhotoLink
+      ? `<p><a href="${escapeAttr(safePhotoLink)}" style="background:#f59e0b;color:#111;padding:10px 18px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block">Open drive link</a></p>`
+      : order.photoLink
+        ? `<p style="color:#b91c1c"><strong>A photo link was provided but could not be verified.</strong> Check the admin dashboard.</p>`
+        : `<p style="color:#b91c1c"><strong>No photo was provided.</strong> Reach out to the customer.</p>`
 
   const notesBlock = order.notes
     ? `<p><strong>Notes:</strong><br>${escapeHtml(order.notes)}</p>`
@@ -78,4 +87,19 @@ function escapeHtml(s: string): string {
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#39;')
+}
+
+/** Escape a string for use inside an HTML attribute value. */
+function escapeAttr(s: string): string {
+  return escapeHtml(s)
+}
+
+/** Only allow http(s) URLs — blocks javascript:, data:, and other schemes. */
+function isSafeUrl(url: string): boolean {
+  try {
+    const parsed = new URL(url)
+    return parsed.protocol === 'https:' || parsed.protocol === 'http:'
+  } catch {
+    return false
+  }
 }

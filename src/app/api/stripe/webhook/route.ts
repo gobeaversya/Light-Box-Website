@@ -44,6 +44,16 @@ export async function POST(request: NextRequest) {
     const customerEmail = session.customer_details?.email || ''
 
     try {
+      // Idempotency check: skip if this Stripe session was already recorded.
+      // This prevents duplicate orders when Stripe retries a webhook.
+      const existing = await prisma.order.findUnique({
+        where: { stripeSessionId: session.id },
+      })
+      if (existing) {
+        console.log(`Order for session ${session.id} already exists, skipping.`)
+        return NextResponse.json({ received: true })
+      }
+
       await prisma.order.create({
         data: {
           customerName,

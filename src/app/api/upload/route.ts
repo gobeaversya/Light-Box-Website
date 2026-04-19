@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { v2 as cloudinary } from 'cloudinary'
+import { isRateLimited, getClientIp } from '@/lib/rate-limit'
 
 export const dynamic = 'force-dynamic'
 import { randomUUID } from 'crypto'
@@ -11,6 +12,16 @@ cloudinary.config({
 })
 
 export async function POST(request: NextRequest) {
+  const ip = getClientIp(request)
+
+  // Allow 10 uploads per IP per 15 minutes
+  if (isRateLimited(`upload:${ip}`, 10, 15 * 60 * 1000)) {
+    return NextResponse.json(
+      { error: 'Too many uploads. Please wait a few minutes.' },
+      { status: 429 },
+    )
+  }
+
   const formData = await request.formData()
   const file = formData.get('photo') as File | null
 
