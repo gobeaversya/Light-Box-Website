@@ -26,10 +26,11 @@ const reviews = [
   },
 ]
 
-// Grouped by theme with a shared color family per group, so the masonry reads
-// as distinct color zones as the eye scans down each column.
+// Ordered so the CSS masonry (columns-3 on desktop) reads as three clean color
+// blocks — left col rose, middle col violet with a forest-green Gift card as the
+// focal point, right col amber. Gives a warm → cool → warm rhythm across the grid.
 const useCases = [
-  // Love & Memory (rose)
+  // Left column — Love & Memory (rose)
   {
     emoji: '🌸',
     title: 'Cherry Blossoms',
@@ -55,26 +56,18 @@ const useCases = [
     style: 'bg-rose-50 border-rose-200/60',
   },
 
-  // Action & Sports (sky)
-  {
-    emoji: '🏀',
-    title: 'Sports Moments',
-    story: 'Last season. His number. Forever lit.',
-    style: 'bg-sky-50 border-sky-200/60',
-  },
-  {
-    emoji: '🏒',
-    title: 'Lacrosse & Hockey',
-    story: 'The action shot nobody else has. The one where you can actually see their face.',
-    style: 'bg-sky-50 border-sky-200/60',
-  },
-
-  // Creative & Artistic (violet)
+  // Middle column — Creative (violet) with the Gift as focal point
   {
     emoji: '🐉',
     title: 'Fantasy & Hobbies',
     story: 'Their DnD character art from three years of campaigns. Custom printed, one of a kind, and they will lose their mind when they see it.',
     style: 'bg-violet-50 border-violet-200/60',
+  },
+  {
+    emoji: '🎁',
+    title: "The Gift Nobody Expects",
+    story: "If you're stuck on a gift for someone who has everything, this is it. They will not see it coming.",
+    style: 'bg-forest-500/10 border-forest-500/30',
   },
   {
     emoji: '🎸',
@@ -89,7 +82,19 @@ const useCases = [
     style: 'bg-violet-50 border-violet-200/60',
   },
 
-  // Warm & Glowing (amber)
+  // Right column — Moments & Milestones (amber)
+  {
+    emoji: '🏀',
+    title: 'Sports Moments',
+    story: 'Last season. His number. Forever lit.',
+    style: 'bg-amber-50 border-amber-200/60',
+  },
+  {
+    emoji: '🏒',
+    title: 'Lacrosse & Hockey',
+    story: 'The action shot nobody else has. The one where you can actually see their face.',
+    style: 'bg-amber-50 border-amber-200/60',
+  },
   {
     emoji: '🎓',
     title: 'Graduation Day',
@@ -101,14 +106,6 @@ const useCases = [
     title: 'Fairy Lights & Nature',
     story: 'Golden hour. String lights on a porch. The kind of photo that looks better backlit than any other way.',
     style: 'bg-amber-50 border-amber-200/60',
-  },
-
-  // Capstone (forest) — ends on the brand's core message
-  {
-    emoji: '🎁',
-    title: "The Gift Nobody Expects",
-    story: "If you're stuck on a gift for someone who has everything, this is it. They will not see it coming.",
-    style: 'bg-forest-500/10 border-forest-500/30',
   },
 ]
 
