@@ -295,7 +295,7 @@ export default function HomePage() {
           </div>
           {/* TODO: replace the mailto address below with your real contact email */}
           <a
-            href="mailto:your-email@example.com?subject=Custom%20Lithophane%20Quote"
+            href="mailto:dakota.story26@gmail.com?subject=Custom%20Lithophane%20Quote"
             className="inline-block px-8 py-3 bg-forest-600 text-cream-50 rounded-full font-semibold hover:bg-forest-700 transition-all shadow-[0_4px_14px_rgba(59,85,48,0.35)] hover:shadow-[0_8px_28px_rgba(59,85,48,0.45)]"
           >
             Request a Quote

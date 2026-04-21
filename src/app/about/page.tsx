@@ -1,3 +1,11 @@
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'About',
+  description:
+    'The story behind Tell Your Story. A one-person studio turning photos into handcrafted glowing 3D photo lamps, printed on a Bambu Lab A1.',
+}
+
 export default function AboutPage() {
   return (
     <div className="min-h-screen py-16 px-4 sm:px-6 bg-cream-50">
